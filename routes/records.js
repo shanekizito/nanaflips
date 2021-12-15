@@ -83,9 +83,12 @@ router.route('/').get((req, res) => {
      console.log(response,"response1111111111111111")
         try{
 
-          var asset_array=[];
+
+          if(response.asset_events){
+
+            var asset_array=[];
   
-       for(var v=0;v<response.asset_events.length;v++){
+           for(var v=0;v<response.asset_events.length;v++){
 
           var SingleAsset= {
             Date:response.asset_events[v].created_date?response.asset_events[v].created_date.slice(0,-16):'Empty',
@@ -96,10 +99,12 @@ router.route('/').get((req, res) => {
 
            asset_array.push(SingleAsset); 
       
-      }
+         }
 
-      return asset_array;
+          return asset_array;
 
+          }
+          
         
         
         }
@@ -130,23 +135,30 @@ router.route('/').get((req, res) => {
         .then(response => {
 
           try{
-            var SD_asset_array=[];
 
-          for(var i=0;i<response.asset_events.length;i++){
+            if(response.asset_events){
 
-            var SD_SingleAsset=
-            {
-              Date:response.asset_events[i].created_date? response.asset_events[i].created_date.slice(0,-16):'Empty',
-              price:response.asset_events[i].total_price/1000000000000000000,
-              seller: response.asset_events[i].seller!==null?response.asset_events[i].seller.address:'Empty',
-              asset: response.asset_events[i].asset?response.asset_events[i].asset:'Empty',
-            }    
+              var SD_asset_array=[];
 
-            SD_asset_array.push(SD_SingleAsset);
-        } 
+              for(var i=0;i<response.asset_events.length;i++){
+    
+                var SD_SingleAsset=
+                {
+                  Date:response.asset_events[i].created_date? response.asset_events[i].created_date.slice(0,-16):'Empty',
+                  price:response.asset_events[i].total_price/1000000000000000000,
+                  seller: response.asset_events[i].seller!==null?response.asset_events[i].seller.address:'Empty',
+                  asset: response.asset_events[i].asset?response.asset_events[i].asset:'Empty',
+                }    
+    
+                SD_asset_array.push(SD_SingleAsset);
+            } 
+    
+            return SD_asset_array;
+    
 
-        return SD_asset_array;
-
+              
+            }
+           
           }
 
           catch(error){
