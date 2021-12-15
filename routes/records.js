@@ -66,7 +66,9 @@ router.route('/').get((req, res) => {
     let SD_NFT_Sale=[];
     let SD_Sales=[];
     var SD_Buys=[];
-    
+    let NFT_Sale=[];
+    let Sales=[];
+    let Buys=[];
     let EthereumBalance;
 
     for (var o=0; o<601;o=o+300){
@@ -186,9 +188,7 @@ router.route('/').get((req, res) => {
         };
     
 
-    let NFT_Sale=[];
-    let Sales=[];
-    let Buys=[];
+   
   
  
 
