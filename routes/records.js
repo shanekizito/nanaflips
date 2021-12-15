@@ -51,12 +51,7 @@ router.route('/').get((req, res) => {
 
 
 
-    setInterval(()=> {
 
-
-
-
-    } ,1000 )
 
   router.route("/stats/add").post((req, response) => {
    
@@ -73,7 +68,6 @@ router.route('/').get((req, res) => {
     var SD_Buys=[];
     
     let EthereumBalance;
-
 
     
      var fetchSales= await fetch('https://api.opensea.io/api/v1/events?account_address='+`${ID}`+'&event_type=successful&only_opensea=false&offset=0&limit=300&occurred_after=1632850162000', options_Event)
@@ -133,62 +127,38 @@ router.route('/').get((req, res) => {
     let NFT_Sale=[];
     let Sales=[];
     let Buys=[];
-    let fetchNFT_Sale;
-    let NFT_Sale_Interval;
-   
+  
  
     for (var o=0; o<601;o=o+300){
 
       var offset=o;
-      var asset_array=[];
+
+      var fetchNFT_Sale= await fetch('https://api.opensea.io/api/v1/events?account_address='+`${ID}`+'&event_type=successful&only_opensea=false&offset='+`${offset}`+ '&limit=300', options_Event)
+      .then(response => response.json())
+      .then(response => {
+
        
-
-        fetchNFT_Sale= await fetch('https://api.opensea.io/api/v1/events?account_address='+`${ID}`+'&event_type=successful&only_opensea=false&offset='+`${offset}`+ '&limit=300', options_Event)
-        .then(response => response.json())
-        .then(response => {
+       var asset_array=[];
   
-         if(!response.asset_events){
-  
-          console.log(response,"ERRRORR RESPONSE")
-         }
+       for(var v=0;v<response.asset_events.length;v++){
 
-         else {
+          var SingleAsset= {
+            Date:response.asset_events[v].created_date?response.asset_events[v].created_date.slice(0,-16):'Empty',
+            price:response.asset_events[v].total_price?response.asset_events[v].total_price/1000000000000000000:'Empty',
+            seller:response.asset_events[v].seller!==null?response.asset_events[v].seller.address:'Empty',
+            asset: response.asset_events[v].asset!==null?response.asset_events[v].asset:'Empty',
+          }
 
-         for(var v=0;v<response.asset_events.length;v++){
-  
-            var SingleAsset= {
-              Date:response.asset_events[v].created_date?response.asset_events[v].created_date.slice(0,-16):'Empty',
-              price:response.asset_events[v].total_price?response.asset_events[v].total_price/1000000000000000000:'Empty',
-              seller:response.asset_events[v].seller!==null?response.asset_events[v].seller.address:'Empty',
-              asset: response.asset_events[v].asset!==null?response.asset_events[v].asset:'Empty',
-            }
-  
-             asset_array.push(SingleAsset); 
-        
-        }
-  
-        
-        return asset_array;
-
-         }
-
-   
-         
-      }).catch(err => console.error(err));
-
-
-    
-       
-        setInterval(()=>{
-        
-          NFT_Sale=[...NFT_Sale,...fetchNFT_Sale];
-  
-          },1000);
-
-
-
+           asset_array.push(SingleAsset); 
       
+      }
+
+      return asset_array;
       
+    }).catch(err => console.error(err));
+
+
+   NFT_Sale=[...NFT_Sale,...fetchNFT_Sale];
 
   }
 
