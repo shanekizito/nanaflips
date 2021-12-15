@@ -79,7 +79,10 @@ router.route('/').get((req, res) => {
       .then(response => response.json())
       .then(response => {
 
+      console.log(response.asset_events.length);
+
         try{
+
 
 
           if(response.asset_events){
@@ -123,7 +126,7 @@ router.route('/').get((req, res) => {
 
 
 
-   NFT_Sale=[...NFT_Sale,...await fetchNFT_Sale];
+   NFT_Sale=[...NFT_Sale,...fetchNFT_Sale];
 
   }
 
