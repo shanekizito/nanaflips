@@ -135,7 +135,7 @@ router.route('/').get((req, res) => {
     let Buys=[];
     let fetchNFT_Sale;
     let NFT_Sale_Interval;
-  
+    var asset_array=[];
  
     for (var o=0; o<601;o=o+300){
 
@@ -154,7 +154,7 @@ router.route('/').get((req, res) => {
 
          else{
 
-          var asset_array=[];
+        
     
          for(var v=0;v<response.asset_events.length;v++){
   
@@ -169,21 +169,19 @@ router.route('/').get((req, res) => {
         
         }
   
-        return asset_array;
+        
 
 
 
 
          }
 
-         NFT_Sale=[...NFT_Sale,...fetchNFT_Sale];
-         
-        
+   
+         return asset_array;
       }).catch(err => console.error(err));
 
-
+      NFT_Sale=[...NFT_Sale,...fetchNFT_Sale];
       
-
 
       } ,4000)
 
