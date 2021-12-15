@@ -268,7 +268,7 @@ for(var b=0;b<Buys.length;b++){
 
 
       
-    },3000)
+    },3000);
     
 
 
@@ -354,34 +354,42 @@ var idArray=[];
   }, 0);
 
 
-    maxAverageHoldDuration=(sum/maxHoldArray.length).toFixed(0);
+  maxAverageHoldDuration=(sum/maxHoldArray.length).toFixed(0);
 
-      var newUser ={
-        id:ID,
-        duration:req.body.duration_upload,
-        ethereumBalance:EthereumBalance,
-        assetAmount:req.body.assetAmount_upload,
-        NFT_stats:{
-        maxAverageHoldDuration:maxAverageHoldDuration,
-        maxAverageHoldDuration2:maxAverageHoldDuration2,
-        NFT_Sale:NFT_Sale,
-        SD_NFT_Sale:SD_NFT_Sale,
-        SD_Sales:SD_Sales,
-        SD_Buys:SD_Buys,
-        Sales:Sales,
-        Buys:Buys,
-        earliestTransfer:req.body.NFT_stats.transfer_upload,
-        duration_upload:req.body.duration_upload,
-        ealiestReceived:req.body.NFT_stats.received_upload,
-        latestTransferred:req.body.NFT_stats.latestTransferred_upload, 
-        latestReceived:req.body.NFT_stats.latestReceived_upload,
-        sixtyDayTo:req.body.NFT_stats.sixtyDayTo_upload,
-        sixtyDayFrom:req.body.NFT_stats.sixtyDayFrom_upload,
-      }      
-       };
+  return setTimeout(async()=>{
 
-     
-return newUser;
+    var newUser ={
+      id:ID,
+      duration:req.body.duration_upload,
+      ethereumBalance:EthereumBalance,
+      assetAmount:req.body.assetAmount_upload,
+      NFT_stats:{
+      maxAverageHoldDuration:maxAverageHoldDuration,
+      maxAverageHoldDuration2:maxAverageHoldDuration2,
+      NFT_Sale:NFT_Sale,
+      SD_NFT_Sale:SD_NFT_Sale,
+      SD_Sales:SD_Sales,
+      SD_Buys:SD_Buys,
+      Sales:Sales,
+      Buys:Buys,
+      earliestTransfer:req.body.NFT_stats.transfer_upload,
+      duration_upload:req.body.duration_upload,
+      ealiestReceived:req.body.NFT_stats.received_upload,
+      latestTransferred:req.body.NFT_stats.latestTransferred_upload, 
+      latestReceived:req.body.NFT_stats.latestReceived_upload,
+      sixtyDayTo:req.body.NFT_stats.sixtyDayTo_upload,
+      sixtyDayFrom:req.body.NFT_stats.sixtyDayFrom_upload,
+    }      
+     };
+
+
+     return newUser;
+
+
+  },5000)
+
+
+   
 
 };
 
