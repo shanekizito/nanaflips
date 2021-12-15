@@ -58,6 +58,7 @@ router.route('/').get((req, res) => {
   const dbName=dbo.client.db("NFTstats");
 
    const ID=req.body.ID;
+   console.log(ID)
 
    async function getAllData(ID){
    
@@ -137,7 +138,16 @@ router.route('/').get((req, res) => {
       .then(response => response.json())
       .then(response => {
 
-       var asset_array=[];
+        if(!response.asset_events){
+          
+          console.log(response,"Error response")
+        
+        }
+
+
+        else{
+
+         var asset_array=[];
   
        for(var v=0;v<response.asset_events.length;v++){
 
@@ -153,6 +163,13 @@ router.route('/').get((req, res) => {
       }
 
       return asset_array;
+
+
+
+
+
+        }
+       
       
     }).catch(err => console.error(err));
 
