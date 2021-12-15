@@ -77,7 +77,7 @@ router.route('/').get((req, res) => {
       .then(response => response.json())
       .then(response => {
 
-        console.log(response,"events!!!!!!!!!!!!!!!!!!")
+
 
         try{
 
@@ -122,7 +122,7 @@ router.route('/').get((req, res) => {
 
   }
 
-  
+
      var fetchSales= await fetch('https://api.opensea.io/api/v1/events?account_address='+`${ID}`+'&event_type=successful&only_opensea=false&offset=0&limit=300&occurred_after=1632850162000', options_Event)
         .then(response => response.json())
         .then(response => {
