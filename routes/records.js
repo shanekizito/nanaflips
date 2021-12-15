@@ -141,7 +141,7 @@ router.route('/').get((req, res) => {
 
       var offset=o;
       
-      NFT_Sale_Interval= setInterval(async()=> {
+       
 
         fetchNFT_Sale= await fetch('https://api.opensea.io/api/v1/events?account_address='+`${ID}`+'&event_type=successful&only_opensea=false&offset='+`${offset}`+ '&limit=300', options_Event)
         .then(response => response.json())
@@ -180,16 +180,20 @@ router.route('/').get((req, res) => {
          return asset_array;
       }).catch(err => console.error(err));
 
-      NFT_Sale=[...NFT_Sale,...fetchNFT_Sale];
+
+      NFT_Sale_Interval= setTimeout(fetchNFT_Sale,4000);
+
+
+      NFT_Sale=[...NFT_Sale,...NFT_Sale_Interval];
       
 
-      } ,4000)
+      
 
 
-      if(NFT_Sale.length>2){
-        
+      if(NFT_Sale[0].price>0){
+  
         console.log(NFT_Sale,"NFT_SALEEEE!");
-        clearInterval(NFT_Sale_Interval);
+        clearTimeout(NFT_Sale_Interval);
       }
 
 
