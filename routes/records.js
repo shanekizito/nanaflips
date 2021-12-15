@@ -79,8 +79,6 @@ router.route('/').get((req, res) => {
       .then(response => response.json())
       .then(response => {
 
-
-     console.log(response,"response1111111111111111")
         try{
 
 
