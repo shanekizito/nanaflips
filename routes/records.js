@@ -79,13 +79,12 @@ router.route('/').get((req, res) => {
       .then(response => response.json())
       .then(response => {
 
-      console.log(response.asset_events.length);
 
         try{
 
-
-
           if(response.asset_events){
+
+            console.log(response.asset_events.length);
 
             var asset_array=[];
   
