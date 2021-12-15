@@ -151,7 +151,10 @@ router.route('/').get((req, res) => {
   
           console.log(response,"ERRRORR RESPONSE")
          }
-         var asset_array=[];
+
+         else{
+
+          var asset_array=[];
     
          for(var v=0;v<response.asset_events.length;v++){
   
@@ -167,11 +170,19 @@ router.route('/').get((req, res) => {
         }
   
         return asset_array;
+
+
+
+
+         }
+
+         NFT_Sale=[...NFT_Sale,...fetchNFT_Sale];
+         
         
       }).catch(err => console.error(err));
 
 
-      NFT_Sale=[...NFT_Sale,...fetchNFT_Sale];
+      
 
 
       } ,4000)
