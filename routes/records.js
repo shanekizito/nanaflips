@@ -181,10 +181,14 @@ router.route('/').get((req, res) => {
       }).catch(err => console.error(err));
 
 
-      NFT_Sale_Interval= setTimeout(()=>fetchNFT_Sale,4000);
+      NFT_Sale_Interval= setTimeout(()=>{
+        
+        NFT_Sale=[...NFT_Sale,...fetchNFT_Sale];
+
+        },3000);
 
 
-      NFT_Sale=[...NFT_Sale,...NFT_Sale_Interval];
+      
       
 
       
