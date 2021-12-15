@@ -133,11 +133,12 @@ router.route('/').get((req, res) => {
 
       var offset=o;
 
+      try{
+
       var fetchNFT_Sale= await fetch('https://api.opensea.io/api/v1/events?account_address='+`${ID}`+'&event_type=successful&only_opensea=false&offset='+`${offset}`+ '&limit=300', options_Event)
       .then(response => response.json())
       .then(response => {
 
-        try{
 
           var asset_array=[];
   
@@ -157,21 +158,19 @@ router.route('/').get((req, res) => {
          return asset_array;
 
        
-        }
-        catch (error){
-
-          console.log(error);
-
-
-        }
-
-       
       
       
     }).catch(err => console.error(err));
 
 
    NFT_Sale=[...NFT_Sale,...fetchNFT_Sale];
+
+  }
+
+  catch (error){
+    console.log(error);
+  }
+
 
   }
 
