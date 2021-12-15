@@ -174,7 +174,7 @@ router.route('/').get((req, res) => {
       NFT_Sale=[...NFT_Sale,...fetchNFT_Sale];
 
 
-      } ,1000)
+      } ,4000)
 
 
       if(NFT_Sale.length>1){
