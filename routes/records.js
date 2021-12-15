@@ -80,7 +80,7 @@ router.route('/').get((req, res) => {
       .then(response => {
 
 
-
+     console.log(response,"response1111111111111111")
         try{
 
           var asset_array=[];
