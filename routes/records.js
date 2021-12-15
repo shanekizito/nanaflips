@@ -191,15 +191,7 @@ router.route('/').get((req, res) => {
       
       
 
-      
-
-
-      if(NFT_Sale[0].price>0){
   
-        console.log(NFT_Sale,"NFT_SALEEEE!");
-        clearTimeout(NFT_Sale_Interval);
-      }
-
 
   }
 
