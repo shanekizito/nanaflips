@@ -136,6 +136,7 @@ router.route('/').get((req, res) => {
 
           try{
 
+
             if(response.asset_events){
 
               var SD_asset_array=[];
@@ -167,8 +168,8 @@ router.route('/').get((req, res) => {
           
       }).catch(err => console.error(err));
     
-
-      SD_NFT_Sale=await fetchSales;
+      SD_NFT_Sale= fetchSales;
+    
 
       
 
