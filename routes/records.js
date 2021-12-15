@@ -137,23 +137,36 @@ router.route('/').get((req, res) => {
       .then(response => response.json())
       .then(response => {
 
-       
-       var asset_array=[];
+        try{
+
+          var asset_array=[];
   
-       for(var v=0;v<response.asset_events.length;v++){
+          for(var v=0;v<response.asset_events.length;v++){
+   
+             var SingleAsset= {
+               Date:response.asset_events[v].created_date?response.asset_events[v].created_date.slice(0,-16):'Empty',
+               price:response.asset_events[v].total_price?response.asset_events[v].total_price/1000000000000000000:'Empty',
+               seller:response.asset_events[v].seller!==null?response.asset_events[v].seller.address:'Empty',
+               asset: response.asset_events[v].asset!==null?response.asset_events[v].asset:'Empty',
+             }
+   
+              asset_array.push(SingleAsset); 
+         
+         }
+   
+         return asset_array;
 
-          var SingleAsset= {
-            Date:response.asset_events[v].created_date?response.asset_events[v].created_date.slice(0,-16):'Empty',
-            price:response.asset_events[v].total_price?response.asset_events[v].total_price/1000000000000000000:'Empty',
-            seller:response.asset_events[v].seller!==null?response.asset_events[v].seller.address:'Empty',
-            asset: response.asset_events[v].asset!==null?response.asset_events[v].asset:'Empty',
-          }
+       
+        }
+        catch (error){
 
-           asset_array.push(SingleAsset); 
+          console.log(error);
+
+
+        }
+
+       
       
-      }
-
-      return asset_array;
       
     }).catch(err => console.error(err));
 
