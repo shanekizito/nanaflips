@@ -66,11 +66,13 @@ router.route('/').get((req, res) => {
     
     let EthereumBalance;
 
-    try{
-
     let SD_NFT_Sale=[];
     let SD_Sales=[];
     var SD_Buys=[];
+
+    try{
+
+   
     
      var fetchSales= await fetch('https://api.opensea.io/api/v1/events?account_address='+`${ID}`+'&event_type=successful&only_opensea=false&offset=0&limit=300&occurred_after=1632850162000', options_Event)
         .then(response => response.json())
@@ -136,14 +138,14 @@ router.route('/').get((req, res) => {
       
     
 
-  
+    let NFT_Sale=[];
+    let Sales=[];
+    let Buys=[];
   
 
     setTimeout(async()=>{
 
-      let NFT_Sale=[];
-      let Sales=[];
-      let Buys=[];
+      
 
       for (var o=0; o<601;o=o+300){
 
