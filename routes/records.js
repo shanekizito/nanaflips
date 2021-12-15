@@ -73,7 +73,9 @@ router.route('/').get((req, res) => {
      var fetchSales= await fetch('https://api.opensea.io/api/v1/events?account_address='+`${ID}`+'&event_type=successful&only_opensea=false&offset=0&limit=300&occurred_after=1632850162000', options_Event)
         .then(response => response.json())
         .then(response => {
-          var SD_asset_array=[];
+
+          try{
+            var SD_asset_array=[];
 
           for(var i=0;i<response.asset_events.length;i++){
 
@@ -90,9 +92,16 @@ router.route('/').get((req, res) => {
 
         return SD_asset_array;
 
+          }
+
+          catch(error){
+            console.log(error,"60 days");
+          }
+          
       }).catch(err => console.error(err));
     
-      SD_NFT_Sale=fetchSales;
+
+      SD_NFT_Sale=await fetchSales;
 
       
 
@@ -136,10 +145,10 @@ router.route('/').get((req, res) => {
       var fetchNFT_Sale= await fetch('https://api.opensea.io/api/v1/events?account_address='+`${ID}`+'&event_type=successful&only_opensea=false&offset='+`${offset}`+ '&limit=300', options_Event)
       .then(response => response.json())
       .then(response => {
-        
 
-       
-       var asset_array=[];
+        try{
+
+          var asset_array=[];
   
        for(var v=0;v<response.asset_events.length;v++){
 
@@ -155,11 +164,28 @@ router.route('/').get((req, res) => {
       }
 
       return asset_array;
+
+        
+        
+        }
+        catch(error){
+
+          console.log(error,"errror asset events");
+
+
+       
+        }
+        
+
+       
+       
       
     }).catch(err => console.error(err));
 
 
-   NFT_Sale=[...NFT_Sale,...fetchNFT_Sale];
+
+
+   NFT_Sale=[...NFT_Sale,...await fetchNFT_Sale];
 
   }
 
