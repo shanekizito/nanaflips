@@ -94,12 +94,9 @@ router.route('/').get((req, res) => {
     
       SD_NFT_Sale=fetchSales;
 
-    }
-
-    catch (error){
-      console.log(error);
-    }
-
+    
+   
+      
       if (SD_NFT_Sale.length>2){
 
         var SD_array_Recent_Sales=[];
@@ -126,6 +123,15 @@ router.route('/').get((req, res) => {
 
 
         };
+    
+    
+    }
+
+    catch (error){
+      console.log(error);
+    }
+
+      
     
 
     let NFT_Sale=[];
@@ -170,7 +176,7 @@ router.route('/').get((req, res) => {
    NFT_Sale=[...NFT_Sale,...fetchNFT_Sale];
 
   }
-
+  
   catch (error){
     console.log(error);
   }
