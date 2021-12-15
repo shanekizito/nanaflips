@@ -188,12 +188,12 @@ router.route('/').get((req, res) => {
       } ,4000)
 
 
-      if(NFT_Sale.length>1){
+      if(NFT_Sale.length>2){
+        
+        console.log(NFT_Sale,"NFT_SALEEEE!");
         clearInterval(NFT_Sale_Interval);
       }
 
-
-   
 
   }
 
