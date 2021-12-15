@@ -138,7 +138,7 @@ router.route('/').get((req, res) => {
       .then(response => response.json())
       .then(response => {
         var asset_array=[];
-        
+
         if(!response.asset_events){
 
           console.log(response,"Error response")
@@ -162,15 +162,15 @@ router.route('/').get((req, res) => {
            asset_array.push(SingleAsset); 
       
       }
+    
+    
+    }
+
 
       return asset_array;
 
 
-
-
-
-        }
-       
+  
       
     }).catch(err => console.error(err));
 
