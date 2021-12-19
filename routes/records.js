@@ -340,7 +340,8 @@ return newUser;
 
 
 
-getAllData(ID).then(response => {
+getAllData(ID).then(response =>{
+  console.log(response);
 
 var user=response;
 
