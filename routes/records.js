@@ -130,7 +130,7 @@ router.route('/').get((req, res) => {
     let Buys=[];
   
  
-    for (var o=0; o<601;o=o+300){
+    for (var o=0; o<601;o=o+200){
 
       var offset=o;
 
@@ -276,7 +276,7 @@ var hold_QueryId= hold_NFT.slice(0,30);
 
   else{
 
-    console.log(maxHoldArray2,"maxHoldArray");
+    console.log(maxHoldArray2.length,"maxHoldArray");
   
   }
 
