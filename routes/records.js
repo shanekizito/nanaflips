@@ -84,7 +84,7 @@ router.route('/').get((req, res) => {
 
           if(response.asset_events){
 
-            console.log(response.asset_events.length);
+           
 
             
   
