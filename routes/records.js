@@ -129,8 +129,9 @@ router.route('/').get((req, res) => {
     let Sales=[];
     let Buys=[];
   
- 
-    for (var o=0; o<601;o=o+200){
+    
+
+    for(var o=0; o<601;o+300){
 
       var offset=o;
 
@@ -319,10 +320,10 @@ var hold_QueryId= hold_NFT.slice(0,30);
         maxAverageHoldDuration2:maxAverageHoldDuration2,
         NFT_Sale:NFT_Sale,
         SD_NFT_Sale:SD_NFT_Sale,
-        SD_Sales:[],
-        SD_Buys:[],
-        Sales:[],
-        Buys:[],
+        SD_Sales:SD_Sales,
+        SD_Buys:SD_Buys,
+        Sales:Sales,
+        Buys:Buys,
         earliestTransfer:req.body.NFT_stats.transfer_upload,
         duration_upload:req.body.duration_upload,
         ealiestReceived:req.body.NFT_stats.received_upload,
