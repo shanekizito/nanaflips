@@ -58,6 +58,7 @@ router.route('/').get((req, res) => {
   const dbName=dbo.client.db("NFTstats");
 
    const ID=req.body.ID;
+   
    console.log(ID)
 
    async function getAllData(ID){
@@ -146,15 +147,12 @@ router.route('/').get((req, res) => {
      
       }
 
+     
+      };
       Sales=array_Recent_Sales;
       Buys=array_Recent_Buys;  
       
-      };
-
-
     };
-
-
 
 
      var fetchSales= await fetch('https://api.opensea.io/api/v1/events?account_address='+`${ID}`+'&event_type=successful&only_opensea=false&offset=0&limit=300&occurred_after=1632850162000', options_Event)
@@ -220,10 +218,11 @@ router.route('/').get((req, res) => {
          
           }
 
-           SD_Sales=SD_array_Recent_Sales;
-           SD_Buys=SD_array_Recent_Buys;  
+            
           
           };
+          SD_Sales=SD_array_Recent_Sales;
+           SD_Buys=SD_array_Recent_Buys; 
         };
     
 
@@ -297,12 +296,11 @@ var hold_QueryId= hold_NFT.slice(0,30);
         var holdtime=(today.getTime()-new Date(item.Date).getTime())/(1000*60*60*24).toFixed(0);
         maxHoldArray2.push(holdtime)
         console.log(holdtime, "Below mint");
-     
+    
       }
       
     });
-
-    
+  }
 
 
     if(maxHoldArray2.length>2){
@@ -318,11 +316,11 @@ var hold_QueryId= hold_NFT.slice(0,30);
 
   else{
 
-    console.log(maxHoldArray2,"maxHoldArray");
+    console.log(maxHoldArray2.length,"Below 15 eth array");
   
   }
 
- }
+ 
    
 
 
@@ -342,6 +340,9 @@ var hold_QueryId= hold_NFT.slice(0,30);
       }
 
     });
+
+ }
+ 
     
     if(maxHoldArray.length>2){
 
@@ -351,16 +352,16 @@ var hold_QueryId= hold_NFT.slice(0,30);
   
       maxAverageHoldDuration=(sum/maxHoldArray.length).toFixed(0);
   
-      console.log(maxAverageHoldDuration.length,"Below 0.15Eth Max"); 
+      console.log(maxAverageHoldDuration.length,"Above 0.15Eth array"); 
   }
 
   else{
 
-    console.log(maxHoldArray.length,"Above .15eth");
+    console.log(maxHoldArray.length,"Above 0.15eth");
   
   }
 
-    }
+    
 
   
 
@@ -402,12 +403,12 @@ var hold_QueryId= hold_NFT.slice(0,30);
 
 getAllData(ID).then(response => {
 
-var user=response;
+var person=response;
+console.log(person,"person");
+return person;
 
-return user;
-
-}).then( user=>  {
-  dbName.collection("TrackedWallets").insertOne(user, function (err, res) {
+}).then( person=>  {
+  dbName.collection("Tracked_Wallets").insertOne(person, function (err, res) {
 
       if (err) throw err;
       response.json(res); 
