@@ -19,7 +19,7 @@ const options = {method: 'GET'};
 router.route('/').get((req, res) => {
     const dbName=dbo.client.db("NFTstats");
      
-    dbName.collection("Tracked_Wallets").find().then(users => res.json(users))
+    dbName.collection("UserWallets").find().then(users => res.json(users))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
@@ -33,7 +33,7 @@ router.route('/').get((req, res) => {
 
     console.log(myquery);
     
-    db_connect.collection("Tracked_Wallets").findOne(myquery, function (err, result) {
+    db_connect.collection("UserWallets").findOne(myquery, function (err, result) {
         if (err) throw err;
         res.json(result);
        
@@ -349,7 +349,7 @@ var user=response;
 return user;
 
 }).then( user=>  {
-  dbName.collection("Tracked_Wallets").insertOne(user, function (err, res) {
+  dbName.collection("UserWallets").insertOne(user, function (err, res) {
 
       if (err) throw err;
       response.json(res); 
