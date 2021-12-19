@@ -72,9 +72,10 @@ router.route('/').get((req, res) => {
     let Buys=[];
     let EthereumBalance;
 
-    for (var o=0; o<601;o+300){
+    for (var o=0; o<601;o=o+300){
 
       var offset=o;
+    
       var asset_array=[];
       var fetchNFT_Sale= await fetch('https://api.opensea.io/api/v1/events?account_address='+`${ID}`+'&event_type=successful&only_opensea=false&offset='+`${offset}`+ '&limit=300', options_Event)
       .then(response => response.json())
