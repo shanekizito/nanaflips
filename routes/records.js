@@ -118,7 +118,6 @@ router.route('/').get((req, res) => {
  
     }).catch(err => console.error(err));
 
-
     
    NFT_Sale=[...NFT_Sale,...fetchNFT_Sale];
 
@@ -290,6 +289,7 @@ var hold_QueryId= hold_NFT.slice(0,30);
     var maxHoldArray2=[];
 
     for(var t=0;t<Buys.length;t++){
+
       Buys.forEach(item=>{ 
         if ((item.asset!==null&&account_Assets_Found[t]!=null)&&(item.asset.token_id==account_Assets_Found[t].token_id &&item.price<0.15)){
           console.log(item.price);
@@ -303,7 +303,8 @@ var hold_QueryId= hold_NFT.slice(0,30);
     });
 
     
-  
+
+
     if(maxHoldArray2.length>2){
 
       var sum2 = maxHoldArray2.reduce(function(a, b){
@@ -330,6 +331,7 @@ var hold_QueryId= hold_NFT.slice(0,30);
     var maxHoldArray=[];
 
     for(var m=0;m<Buys.length;m++){
+
       Buys.forEach(item=>{ 
         if ((item.asset!==null&&account_Assets_Found[m]!=null)&&(item.asset.token_id==account_Assets_Found[m].token_id &&item.price>0.15)){
         var today = new Date();
@@ -340,16 +342,30 @@ var hold_QueryId= hold_NFT.slice(0,30);
       }
 
     });
+    
+    if(maxHoldArray.length>2){
+
+      var sum = maxHoldArray.reduce(function(a, b){
+        return a + b;
+    }, 0);
+  
+      maxAverageHoldDuration=(sum/maxHoldArray.length).toFixed(0);
+  
+      console.log(maxAverageHoldDuration.length,"Below 0.15Eth Max"); 
+  }
+
+  else{
+
+    console.log(maxHoldArray.length,"Above .15eth");
+  
+  }
 
     }
 
-    var sum = maxHoldArray.reduce(function(a, b){
-      return a + b;
-  }, 0);
+  
 
 
-    maxAverageHoldDuration=(sum/maxHoldArray.length).toFixed(0);
-
+    if(NFT_Sale.length>2){
       var newUser ={
         id:ID,
         duration:req.body.duration_upload,
@@ -374,8 +390,11 @@ var hold_QueryId= hold_NFT.slice(0,30);
       }      
        };
 
+       return newUser;
+      }
+
      
-return newUser;
+
 
 };
 
