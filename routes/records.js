@@ -33,7 +33,7 @@ router.route('/').get((req, res) => {
 
     console.log(myquery);
     
-    db_connect.collection("TrackedWallets").findOne(myquery, function (err, result) {
+    db_connect.collection("Tracked_Wallets").findOne(myquery, function (err, result) {
         if (err) throw err;
         res.json(result);
        
