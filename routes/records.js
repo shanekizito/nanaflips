@@ -331,6 +331,7 @@ var hold_QueryId= hold_NFT.slice(0,30);
 
     let maxAverageHoldDuration;
     var maxHoldArray=[];
+    var  matching_assets=[];
 
     for(var m=0;m<Buys.length;m++){
 
@@ -340,12 +341,44 @@ var hold_QueryId= hold_NFT.slice(0,30);
         var holdtime=(today.getTime()-new Date(item.Date).getTime())/(1000*60*60*24).toFixed(0);
         maxHoldArray.push(holdtime)
   
-     
-      }
+     }
+
+
+     if((item.asset!==null&&account_Assets_Found[m]!=null)&&(item.asset.token_id==account_Assets_Found[m].token_id)){
+  
+      matching_assets.push(item);
+    
+    }
 
     });
 
  }
+
+
+ function compare(a, b) {
+
+  const A = a.price;
+  const B = b.price;
+
+  let comparison = 0;
+
+  if (A >B) {
+    comparison = 1;
+  } else if (A <B) {
+    comparison = -1;
+  }
+
+  return comparison * -1;
+
+}
+
+
+
+ var sortedAsset= matching_assets.sort(compare);
+  
+ const expensive_asset=sortedAsset[0];
+ 
+ console.log("expensive_asset",expensive_asset);
  
     
     if(maxHoldArray.length>2){
