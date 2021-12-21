@@ -257,7 +257,7 @@ var hold_QueryId= hold_NFT.slice(0,30);
         var today = new Date();
         var holdtime=(today.getTime()-new Date(item.Date).getTime())/(1000*60*60*24).toFixed(0);
         maxHoldArray2.push(holdtime)
-        console.log(holdtime, "Below mint");
+        
      
       }
       
@@ -273,7 +273,7 @@ var hold_QueryId= hold_NFT.slice(0,30);
   
       maxAverageHoldDuration2=(sum2/maxHoldArray2.length).toFixed(0);
   
-      console.log(maxAverageHoldDuration2,"Below 0.15Eth Max"); 
+     
   }
 
   else{
