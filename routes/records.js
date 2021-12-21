@@ -410,6 +410,7 @@ var hold_QueryId= hold_NFT.slice(0,30);
         ethereumBalance:EthereumBalance,
         assetAmount:req.body.assetAmount_upload,
         NFT_stats:{
+        most_expensive_assets:expensive_asset,
         maxAverageHoldDuration:maxAverageHoldDuration,
         maxAverageHoldDuration2:maxAverageHoldDuration2,
         NFT_Sale:NFT_Sale,
