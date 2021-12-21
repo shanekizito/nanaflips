@@ -287,11 +287,6 @@ var hold_QueryId= hold_NFT.slice(0,30);
 
    
 
- 
-
-
-
-
 
 
     let maxAverageHoldDuration;
@@ -310,39 +305,12 @@ var hold_QueryId= hold_NFT.slice(0,30);
       }
 
 
-      if((item.asset!==null&&account_Assets_Found[m]!=null)&&(item.asset.token_id==account_Assets_Found[m].token_id)){
-
-        matching_assets.push(item);
-
-      }
+      
 
     });
 
     }
 
-    function compare(a, b) {
-
-    const A = a.price;
-    const B = b.price;
-  
-    let comparison = 0;
-  
-    if (A >B) {
-      comparison = 1;
-    } else if (A <B) {
-      comparison = -1;
-    }
-  
-    return comparison * -1;
-  
-  }
-  
-  
-  var sortedAsset= matching_assets.sort(compare);
-  
-  const expensive_asset=sortedAsset[0];
-  
-  console.log("expensive_asset",expensive_asset);
 
 
 
@@ -359,7 +327,7 @@ var hold_QueryId= hold_NFT.slice(0,30);
         ethereumBalance:EthereumBalance,
         assetAmount:req.body.assetAmount_upload,
         NFT_stats:{
-        most_expensive_asset:expensive_asset,
+
         maxAverageHoldDuration:maxAverageHoldDuration,
         maxAverageHoldDuration2:maxAverageHoldDuration2,
         NFT_Sale:NFT_Sale,
