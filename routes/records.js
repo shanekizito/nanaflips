@@ -497,7 +497,7 @@ router.route("/register").post((req, response) => {
  });
  
 
- router.post('/login').post( (req, res) => {
+ router.route("/login").post( (req, res) => {
   try {
     const user =  db_connect.collection("user_register").findOne(email, function (err, result) {
       if (err) throw err;
