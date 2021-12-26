@@ -467,7 +467,7 @@ router.route("/register/user").post((req, response) => {
  
   const { username, password, email } = req.body;
 
- let person=req.body;
+ let person={email:req.body.email};
 
 
   let user =  dbName.collection("user_register").findOne(person, function (err, result) {
