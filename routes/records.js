@@ -7,8 +7,6 @@ const fetch = require('node-fetch');
 
 const ObjectId = require("mongodb").ObjectId;
 
-const bcrypt = require('bcryptjs');
-
 const options_Event = {
   method: 'GET',
   headers: {Accept: 'application/json', 'X-API-KEY': '2d3ddf54946e4569b7cd1df8daca6e4a'}
@@ -16,7 +14,7 @@ const options_Event = {
 
 const options = {method: 'GET'};
 
-
+const bcrypt = require('bcryptjs');
 
 router.route('/').get((req, res) => {
     const dbName=dbo.client.db("NFTstats");
@@ -24,6 +22,8 @@ router.route('/').get((req, res) => {
     dbName.collection("TrackedWallets").find().then(users => res.json(users))
     .catch(err => res.status(400).json('Error: ' + err));
 });
+
+
 
 
 
@@ -44,78 +44,11 @@ router.route('/').get((req, res) => {
     });
 
 
-    router.route("/:id").post(function (req, res) {
+  router.route("/:id").post(function (req, res) {
 
 
-
-    });
-
-
-    router.post('/register', async (req, res) => {
-
-      const dbName=dbo.client.db("NFTstats");
-
-      const { email, password } = req.body;
-     
-      console.log('req.body', req.body);
-     
-      let user = await db_connect.collection("Tracked_Wallets").findOne(email, function (err, result) {
-        if (err) throw err;
-        res.json(result);
-       
-      });
-
-      if (user) {
-        return res.status(400).send('User with the provided email already exist.');
-      }
-     
-      try {
-        user = req.body;
-        user.password = await bcrypt.hash(password, 8);
-     
-        
-        dbName.collection("user_register").insertOne( user, function (err, res) {
-
-          if (err) throw err;
-          response.json(res); 
-      
-        });
-
-        res.status(201).send();
-      } catch (e) {
-        res.status(500).send('Something went wrong. Try again later.');
-      }
-
-     });
-     
-
-
-    router.post('/login', async (req, res) => {
-      try {
-        const user = await await db_connect.collection("user_register").findOne(email, function (err, result) {
-          if (err) throw err;
-          res.json(result);
-         
-        });
-
-        if (!user) {
-          return res.status(400).send('User with provided email does not exist.');
-        }
     
-        const isMatch = await bcrypt.compare(
-          req.body.password,
-          user.password
-        );
     
-        if (!isMatch) {
-          return res.status(400).send('Invalid credentials.');
-        }
-        const { password, ...rest } = user.toObject();
-    
-        return res.send(rest);
-      } catch (error) {
-        return res.status(500).send('Something went wrong. Try again later.');
-      }
     });
 
 
@@ -400,6 +333,7 @@ var hold_QueryId= hold_NFT.slice(0,30);
 
     let maxAverageHoldDuration;
     var maxHoldArray=[];
+    var  matching_assets=[];
 
     for(var m=0;m<Buys.length;m++){
 
@@ -409,12 +343,44 @@ var hold_QueryId= hold_NFT.slice(0,30);
         var holdtime=(today.getTime()-new Date(item.Date).getTime())/(1000*60*60*24).toFixed(0);
         maxHoldArray.push(holdtime)
   
-     
-      }
+     }
+
+
+     if((item.asset!==null&&account_Assets_Found[m]!=null)&&(item.asset.token_id==account_Assets_Found[m].token_id)){
+  
+      matching_assets.push(item);
+    
+    }
 
     });
 
  }
+
+
+ function compare(a, b) {
+
+  const A = a.price;
+  const B = b.price;
+
+  let comparison = 0;
+
+  if (A >B) {
+    comparison = 1;
+  } else if (A <B) {
+    comparison = -1;
+  }
+
+  return comparison * -1;
+
+}
+
+
+
+ var sortedAsset= matching_assets.sort(compare);
+  
+ const expensive_asset=sortedAsset[0];
+ 
+ console.log("expensive_asset",expensive_asset);
  
     
     if(maxHoldArray.length>2){
@@ -446,6 +412,7 @@ var hold_QueryId= hold_NFT.slice(0,30);
         ethereumBalance:EthereumBalance,
         assetAmount:req.body.assetAmount_upload,
         NFT_stats:{
+        most_expensive_assets:expensive_asset,
         maxAverageHoldDuration:maxAverageHoldDuration,
         maxAverageHoldDuration2:maxAverageHoldDuration2,
         NFT_Sale:NFT_Sale,
@@ -492,6 +459,71 @@ return person;
 
 });
 
+router.post('/register', async (req, res) => {
+
+  const dbName=dbo.client.db("NFTstats");
+
+  const { email, password } = req.body;
+ 
+  console.log('req.body', req.body);
+ 
+  let user = await db_connect.collection("Tracked_Wallets").findOne(email, function (err, result) {
+    if (err) throw err;
+    res.json(result);
+   
+  });
+
+  if (user) {
+    return res.status(400).send('User with the provided email already exist.');
+  }
+ 
+  try {
+    user = req.body;
+    user.password = await bcrypt.hash(password, 8);
+ 
+    
+    dbName.collection("user_register").insertOne( user, function (err, res) {
+
+      if (err) throw err;
+      response.json(res); 
+  
+    });
+
+    res.status(201).send();
+  } catch (e) {
+    res.status(500).send('Something went wrong. Try again later.');
+  }
+
+ });
+ 
+
+ router.post('/login', async (req, res) => {
+  try {
+    const user = await await db_connect.collection("user_register").findOne(email, function (err, result) {
+      if (err) throw err;
+      res.json(result);
+     
+    });
+
+    if (!user) {
+      return res.status(400).send('User with provided email does not exist.');
+    }
+
+    const isMatch = await bcrypt.compare(
+      req.body.password,
+      user.password
+    );
+
+    if (!isMatch) {
+      return res.status(400).send('Invalid credentials.');
+    }
+    const { password, ...rest } = user.toObject();
+
+    return res.send(rest);
+  } catch (error) {
+    return res.status(500).send('Something went wrong. Try again later.');
+  }
+});
 
 
 router.route("/wallet/add").post((req, response) => {
