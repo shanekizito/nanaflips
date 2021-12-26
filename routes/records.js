@@ -465,9 +465,11 @@ router.route("/register/user").post((req, response) => {
  
   const dbName=dbo.client.db("NFTstats");
  
-  const { email, password } = req.body;
+  const { username, password, email } = req.body;
+
+  console.log(email);
  
- console.log("yes");
+ 
 
   let user =  dbName.collection("user_register").findOne(email, function (err, result) {
     if (err) throw err;
