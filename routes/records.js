@@ -479,7 +479,8 @@ router.route("/register/user").post((req, response) => {
 
  
 
-  if (user) {
+  if (user.email==email) {
+    console.log("found!");
     return res.status(400).send('User with the provided email already exist.');
   }
 
