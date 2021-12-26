@@ -459,15 +459,17 @@ return person;
 
 });
 
-router.route("/register").post((req, response) => {
-
+router.route("/register").post( async(req, response) => {
+ 
+  console.log(await req.body,"body");
+ 
   const dbName=dbo.client.db("NFTstats");
-  console.log(req.body,"body");
-  const { email, password } = req.body;
+ 
+  const { email, password } = await req.body;
  
  console.log("yes");
 
-  let user =  db_connect.collection("Tracked_Wallets").findOne(email, function (err, result) {
+  let user =  dbName.collection("user_register").findOne(email, function (err, result) {
     if (err) throw err;
     res.json(result);
    
@@ -478,10 +480,9 @@ router.route("/register").post((req, response) => {
   }
  
   try {
-    user = req.body;
+    user = await req.body;
     user.password =  bcrypt.hash(password, 8);
  
-  
     dbName.collection("user_register").insertOne( user, function (err, res) {
 
       if (err) throw err;
@@ -498,8 +499,13 @@ router.route("/register").post((req, response) => {
  
 
  router.route("/login").post( (req, res) => {
+
+  const { email, password } = await req.body;
+  const dbName=dbo.client.db("NFTstats");
+
   try {
-    const user =  db_connect.collection("user_register").findOne(email, function (err, result) {
+
+    const user =  dbName.collection("user_register").findOne(email, function (err, result) {
       if (err) throw err;
       res.json(result);
      
