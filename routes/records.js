@@ -473,7 +473,7 @@ router.route("/register/user").post((req, response) => {
   let user =  dbName.collection("user_register").findOne(person, function (err, result) {
     console.log(result,"userrrr");
     if (err) throw err;
-    response.json(result);
+    return response.json(result);
     
 
   });
@@ -481,7 +481,7 @@ router.route("/register/user").post((req, response) => {
  
 
   if (user) {
-    return response.status(400).send('User with the provided email already exist.');
+    return (console.log('exists'))
   }
  
   try {
