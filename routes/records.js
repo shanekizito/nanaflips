@@ -472,8 +472,8 @@ router.route("/register/user").post((req, response) => {
 
   let user =  dbName.collection("user_register").findOne(person, function (err, result) {
     console.log(result,"userrrr");
-    if (err) throw err;
-    return response.json(result);
+    if (err) return (console.log('error',err));
+    return (console.log('ok'));
     
 
   });
