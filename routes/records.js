@@ -461,20 +461,20 @@ return person;
 
 router.route("/register/user").post((req, response) => {
  
-  console.log( req.body,"body");
+  
  
   const dbName=dbo.client.db("NFTstats");
  
   const { username, password, email } = req.body;
 
+ let person=req.body;
 
- 
- 
 
-  let user =  dbName.collection("user_register").findOne({email:email}, function (err, result) {
+  let user =  dbName.collection("user_register").findOne(person, function (err, result) {
+    console.log(result,"userrrr");
     if (err) throw err;
     response.json(result);
-    console.log(result,"userrrr");
+    
 
   });
 
