@@ -459,7 +459,7 @@ return person;
 
 });
 
-router.route('/register').post(async (req, res) => {
+router.route("/register").post((req, response) => {
 
   const dbName=dbo.client.db("NFTstats");
   console.log(req.body,"body");
@@ -478,9 +478,9 @@ router.route('/register').post(async (req, res) => {
  
   try {
     user = req.body;
-    user.password = await bcrypt.hash(password, 8);
+    user.password =  bcrypt.hash(password, 8);
  
-    
+  
     dbName.collection("user_register").insertOne( user, function (err, res) {
 
       if (err) throw err;
@@ -496,7 +496,7 @@ router.route('/register').post(async (req, res) => {
  });
  
 
- router.post('/login').post(async (req, res) => {
+ router.post('/login').post( (req, res) => {
   try {
     const user = await await db_connect.collection("user_register").findOne(email, function (err, result) {
       if (err) throw err;
@@ -508,7 +508,7 @@ router.route('/register').post(async (req, res) => {
       return res.status(400).send('User with provided email does not exist.');
     }
 
-    const isMatch = await bcrypt.compare(
+    const isMatch =  bcrypt.compare(
       req.body.password,
       user.password
     );
