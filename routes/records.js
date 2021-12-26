@@ -498,7 +498,7 @@ router.route("/register").post( async(req, response) => {
  });
  
 
- router.route("/login").post( (req, res) => {
+ router.route("/login").post( async (req, res) => {
 
   const { email, password } = await req.body;
   const dbName=dbo.client.db("NFTstats");
