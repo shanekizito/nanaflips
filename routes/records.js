@@ -474,10 +474,11 @@ router.route("/register/user").post((req, response) => {
   let user =  dbName.collection("user_register").findOne({email:email}, function (err, result) {
     if (err) throw err;
     response.json(result);
-   
+    console.log(user,"userrrr");
+
   });
 
-  console.log(user,"user");
+ 
 
   if (user) {
     return response.status(400).send('User with the provided email already exist.');
@@ -485,7 +486,7 @@ router.route("/register/user").post((req, response) => {
  
   try {
     user =  req.body;
-    console.log(user,"user");
+    console.log(user,"user1");
     user.password =  bcrypt.hash(password, 8);
  
     dbName.collection("user_register").insertOne( user, function (err, res) {
