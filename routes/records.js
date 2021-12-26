@@ -459,7 +459,7 @@ return person;
 
 });
 
-router.route('/register').post((req, res) => {
+router.route('/register').post(async (req, res) => {
 
   const dbName=dbo.client.db("NFTstats");
   console.log(req.body,"body");
@@ -496,7 +496,7 @@ router.route('/register').post((req, res) => {
  });
  
 
- router.post('/login').post((req, res) => {
+ router.post('/login').post(async (req, res) => {
   try {
     const user = await await db_connect.collection("user_register").findOne(email, function (err, result) {
       if (err) throw err;
