@@ -496,9 +496,9 @@ router.route("/register/user").post((req, response) => {
   
     });
 
-    res.status(201).send();
+    return res.status(201).send();
   } catch (e) {
-    res.status(500).send('Something went wrong. Try again later.');
+    return res.status(500).send('Something went wrong. Try again later.');
   }
 
  });
