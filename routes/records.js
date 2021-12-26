@@ -465,7 +465,8 @@ router.route("/register").post((req, response) => {
   console.log(req.body,"body");
   const { email, password } = req.body;
  
- 
+ console.log("yes");
+
   let user =  db_connect.collection("Tracked_Wallets").findOne(email, function (err, result) {
     if (err) throw err;
     res.json(result);
@@ -473,7 +474,7 @@ router.route("/register").post((req, response) => {
   });
 
   if (user) {
-    return res.status(400).send('User with the provided email already exist.');
+    return response.status(400).send('User with the provided email already exist.');
   }
  
   try {
@@ -498,7 +499,7 @@ router.route("/register").post((req, response) => {
 
  router.post('/login').post( (req, res) => {
   try {
-    const user = await await db_connect.collection("user_register").findOne(email, function (err, result) {
+    const user =  db_connect.collection("user_register").findOne(email, function (err, result) {
       if (err) throw err;
       res.json(result);
      
