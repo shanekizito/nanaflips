@@ -459,13 +459,13 @@ return person;
 
 });
 
-router.route("/register").post( async(req, response) => {
+router.route("/register/user").post((req, response) => {
  
-  console.log(await req.body,"body");
+  console.log( req.body,"body");
  
   const dbName=dbo.client.db("NFTstats");
  
-  const { email, password } = await req.body;
+  const { email, password } = req.body;
  
  console.log("yes");
 
@@ -475,12 +475,15 @@ router.route("/register").post( async(req, response) => {
    
   });
 
+  console.log(user,"user");
+
   if (user) {
     return response.status(400).send('User with the provided email already exist.');
   }
  
   try {
-    user = await req.body;
+    user =  req.body;
+    console.log(user,"user");
     user.password =  bcrypt.hash(password, 8);
  
     dbName.collection("user_register").insertOne( user, function (err, res) {
@@ -498,9 +501,9 @@ router.route("/register").post( async(req, response) => {
  });
  
 
- router.route("/login").post( async (req, res) => {
+ router.route("/login").post((req, res) => {
 
-  const { email, password } = await req.body;
+  const { email, password } =  req.body;
   const dbName=dbo.client.db("NFTstats");
 
   try {
