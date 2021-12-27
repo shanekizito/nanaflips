@@ -542,8 +542,10 @@ router.route("/wallet/add").post((req, response) => {
     let CsvUpload= 
 
     { 
+
     address:req.body.Csv_address_upload,
     username:req.body.Csv_username_upload,
+
     };
 
 
@@ -563,7 +565,7 @@ router.route("/wallet/add").post((req, response) => {
   router.route("/wallet/get/:id").get(function (req, res) {
     let db_connect =dbo.client.db("NFTstats");
 
-    let myquery ={ID:req.params.id};
+    let myquery ={username:req.params.id};
 
     console.log(myquery,"searchID...............................");
     
