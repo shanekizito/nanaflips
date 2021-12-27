@@ -470,16 +470,17 @@ router.route("/register/user").post((req, response) => {
  let person={email:req.body.email};
 
 
-  let user =  dbName.collection("user_register").findOne(person, function (err, result) {
+  let search =  dbName.collection("user_register").findOne(person, function (err, result) {
     
     if (err) return (console.log('error',err));
     return result;
     
   });
 
+  console.log(search,"user");
  
 
-  if (user.email==email) {
+  if (search.email==email) {
     console.log("found!");
     return res.status(400).send('User with the provided email already exist.');
   }
@@ -487,7 +488,6 @@ router.route("/register/user").post((req, response) => {
  
   try {
     user =  req.body;
-    console.log(user,"user1");
     user.password =  bcrypt.hash(password, 8);
  
     dbName.collection("user_register").insertOne( user, function (err, res) {
