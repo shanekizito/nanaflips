@@ -473,14 +473,15 @@ router.route("/register/user").post(async(req, response) => {
   let search = await dbName.collection("user_register").findOne(person, function (err, result) {
     
     if (err) return (console.log('error',err));
+    console.log(result);
     return result;
     
   });
 
-  console.log(search,"user");
+  console.log(await search,"user");
  
 
-  if (search.email==email) {
+  if (await search.email==email) {
     console.log("found!");
     return res.status(400).send('User with the provided email already exist.');
   }
