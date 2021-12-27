@@ -477,7 +477,7 @@ router.route("/register/user").post(async(req, response) => {
 
   if (search) {
     console.log("found!");
-    return res.status(400).send('User with the provided email already exist.');
+    return response.status(400).send('User with the provided email already exist.');
   }
 
  
