@@ -55,7 +55,7 @@ router.route('/').get((req, res) => {
 
 
 
-  router.route("/stats/add").post((req, response) => {
+  router.route("/stats/add").post( (req, response) => {
    
   const dbName=dbo.client.db("NFTstats");
 
@@ -558,6 +558,21 @@ router.route("/wallet/add").post((req, response) => {
 
 
   });
+
+
+  router.route("/wallet/get/:id").get(function (req, res) {
+    let db_connect =dbo.client.db("NFTstats");
+
+    let myquery ={ID:req.params.id};
+
+    console.log(myquery,"searchID...............................");
+    
+    db_connect.collection("CsvFiles").findOne(myquery, function (err, result) {
+        if (err) throw err;
+        res.json(result);
+      });
+
+    });
 
    
   module.exports = router;
