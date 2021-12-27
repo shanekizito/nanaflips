@@ -459,7 +459,7 @@ return person;
 
 });
 
-router.route("/register/user").post((req, response) => {
+router.route("/register/user").post(async(req, response) => {
  
   
  
@@ -470,7 +470,7 @@ router.route("/register/user").post((req, response) => {
  let person={email:req.body.email};
 
 
-  let search =  dbName.collection("user_register").findOne(person, function (err, result) {
+  let search = await dbName.collection("user_register").findOne(person, function (err, result) {
     
     if (err) return (console.log('error',err));
     return result;
