@@ -470,18 +470,12 @@ router.route("/register/user").post(async(req, response) => {
  let person={email:req.body.email};
 
 
-  let search = await dbName.collection("user_register").findOne(person, function (err, result) {
-    
-    if (err) return (console.log('error',err));
-    console.log(result);
-    return result;
-    
-  });
+  let search = await dbName.collection("user_register").findOne(person);
 
-  console.log(await search,"user");
+  console.log( search,"user");
  
 
-  if (await search.email==email) {
+  if (search) {
     console.log("found!");
     return res.status(400).send('User with the provided email already exist.');
   }
@@ -489,15 +483,12 @@ router.route("/register/user").post(async(req, response) => {
  
   try {
     user =  req.body;
-    user.password =  bcrypt.hash(password, 8);
+    user.password = await bcrypt.hash(password, 8);
  
     dbName.collection("user_register").insertOne( user, function (err, res) {
-
       if (err) throw err;
       response.json(res); 
-  
     });
-
     
   } catch (e) {
     return response.status(500).send('Something went wrong. Try again later.');
