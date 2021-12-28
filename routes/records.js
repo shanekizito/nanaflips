@@ -27,6 +27,83 @@ router.route('/').get((req, res) => {
 
 
 
+
+  router.route("/collections/get").get(function (req, res) {
+
+    let db_connect =dbo.client.db("NFTstats");
+
+    for (var o=0; o<601;o=o+300){
+  
+   var offset=o;
+   var asset_array=[];
+   let all_Collections=[];
+
+   var fetch_Collections=await fetch('https://api.opensea.io/api/v1/collections?offset='+`${offset}`+ '&limit=300', options_Event)
+  .then(response => response.json())
+  .then(response => {
+
+    try{
+
+      if(response.collections){
+
+      for(var v=0;v<response.collections.length;v++){
+
+      var singleCollection= {
+        Name:response.collections[v].name?response.collections[v].name:'Empty',
+        Date:response.collections[v].created_date?response.collections[v].created_date.slice(0,-16):'Empty',
+        Floor_price:response.collections[v].stats.floor_price?response.collections[v].floor_price/1000000000000000000:'Empty',
+        Stats:response.collections[v].stats?response.collections[v].stats:'Empty',
+        Description:response.collections[v].description?response.collections[v].description:'Empty',
+      }
+       asset_array.push(singleCollection);
+      }
+
+      return asset_array;
+    }
+
+    }
+    catch(error){
+
+      console.log(error,"errror asset events");
+    
+      return['error'];
+    }
+    
+   })
+  .catch(err => console.error(err));
+  
+ all_Collections=[...all_Collections,...fetch_Collections];
+
+}
+
+function compare(a, b) {
+
+  const A = a.Floor_price;
+  const B = b.Floor_price;
+
+  let comparison = 0;
+
+  if (A >B) {
+    comparison = 1;
+  } else if (A <B) {
+    comparison = -1;
+  }
+
+  return comparison * -1;
+
+}
+
+
+var sortedCollection = all_Collections.sort(compare);
+  
+    db_connect.collection("Collections").insertOne(sortedCollection, function (err, result) {
+        if (err) throw err;
+        res.json(result);
+
+      });
+
+    });
+
   router.route("/stats/get/:id").get(function (req, res) {
     let db_connect =dbo.client.db("NFTstats");
 
@@ -50,9 +127,6 @@ router.route('/').get((req, res) => {
     
     
     });
-
-
-
 
 
   router.route("/stats/add").post( (req, response) => {
@@ -88,10 +162,6 @@ router.route('/').get((req, res) => {
 
           if(response.asset_events){
 
-           
-
-            
-  
           for(var v=0;v<response.asset_events.length;v++){
 
           var SingleAsset= {
@@ -200,10 +270,7 @@ router.route('/').get((req, res) => {
       }).catch(err => console.error(err));
     
       SD_NFT_Sale= fetchSales;
-    
-
-
-      
+     
 
       if (SD_NFT_Sale.length>2){
 
@@ -232,14 +299,9 @@ router.route('/').get((req, res) => {
         };
     
 
-   
   
- 
-
-
-
   
-     var  fetchEthBalance= await fetch('https://api.etherscan.io/api?module=account&action=balance&address='+`${ID}` +'&tag=latest', options)
+var  fetchEthBalance= await fetch('https://api.etherscan.io/api?module=account&action=balance&address='+`${ID}` +'&tag=latest', options)
       .then(response => response.json())
       .then(response =>{
 
@@ -327,10 +389,7 @@ var hold_QueryId= hold_NFT.slice(0,30);
   }
 
  
-   
-
-
-
+  
     let maxAverageHoldDuration;
     var maxHoldArray=[];
     var  matching_assets=[];
@@ -395,16 +454,10 @@ var hold_QueryId= hold_NFT.slice(0,30);
   }
 
   else{
-
     console.log(maxHoldArray.length,"Above 0.15eth");
-  
   }
 
     
-
-  
-
-
     if(NFT_Sale.length>2){
       var newUser ={
         id:ID,
@@ -433,10 +486,6 @@ var hold_QueryId= hold_NFT.slice(0,30);
 
        return newUser;
       }
-
-     
-
-
 };
 
 
@@ -452,10 +501,10 @@ return person;
 
       if (err) throw err;
       response.json(res); 
-  
     });
 
 });
+
 
 });
 
