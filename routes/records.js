@@ -35,7 +35,7 @@ router.route('/').get((req, res) => {
     var asset_array=[];
 
 
-    for (var b=147473647; b<147483647;b=b+300){
+    for (var b=140473647; b<147483647;b=b+300){
   
    var offset=b;
    console.log("offset:"+offset);
