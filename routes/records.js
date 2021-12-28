@@ -31,12 +31,14 @@ router.route('/').get((req, res) => {
   router.route("/collections/get").get( async(req, res)=> {
 
     let db_connect =dbo.client.db("NFTstats");
+    var all_Collections=[];
 
-    for (var o=0; o<601;o=o+300){
+    
+    for (var b=0; b<601;b=b+300){
   
    var offset=o;
+   console.log(offset);
    var asset_array=[];
-   var all_Collections=[];
 
    var fetch_Collections=await fetch('https://api.opensea.io/api/v1/collections?offset='+`${offset}`+ '&limit=300', options_Event)
   .then(response => response.json())
@@ -56,6 +58,7 @@ router.route('/').get((req, res) => {
         Description:response.collections[v].description?response.collections[v].description:'Empty',
       }
        asset_array.push(singleCollection);
+      
       }
 
       return asset_array;
