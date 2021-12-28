@@ -66,15 +66,16 @@ router.route('/').get((req, res) => {
       }
    
     }
-
-      return asset_array;
+    all_Collections=[...all_Collections,...asset_array];
+     
     }
+    
 
     else{
       console.log("empty................................................................",response);
       return null;
     }
-  
+    
   }
     catch(error){
 
@@ -83,11 +84,14 @@ router.route('/').get((req, res) => {
     }
     
    })
+
   .catch(err => {
-    return console.error(err)});
+    console.error(err)
+    return null });
   
-  all_Collections=fetch_Collections;
+  
   console.log(all_Collections.length,'collectiondlenght');
+
 }
 
 
