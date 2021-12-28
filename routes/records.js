@@ -102,10 +102,12 @@ db_Insert={
   
     db_connect.collection("Collections").insertOne(db_Insert, function (err, result) {
         if (err) throw err;
-        res.json(result);
+        res.send(db_Insert.collection);
       });
 
     });
+
+    
 
 
 
