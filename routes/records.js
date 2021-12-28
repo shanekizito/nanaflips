@@ -95,11 +95,14 @@ function compare(a, b) {
 
 
 var sortedCollection =all_Collections.sort(compare);
+
+db_Insert={
+  collection:sortedCollection
+}
   
-    db_connect.collection("Collections").insertOne(sortedCollection, function (err, result) {
+    db_connect.collection("Collections").insertOne(db_Insert, function (err, result) {
         if (err) throw err;
         res.json(result);
-
       });
 
     });
