@@ -523,12 +523,11 @@ router.route("/register/user").post(async(req, response) => {
     if (!isMatch) {
       return res.status(400).send('Invalid credentials.');
     }
-    const { password, ...rest } = user.toObject();
+   
+    return res.send(user);
 
-    return res.send(rest);
-    
   } catch (error) {
-    console.log(error); 
+    console.log(error,"error"); 
     return res.status(500).send('Something went wrong. Try again later.');
   }
 });
