@@ -34,10 +34,9 @@ router.route('/').get((req, res) => {
     var all_Collections=[];
 
 
-    for (var b=0; b<601;b=b+300){
+    for (var b=0; b<10000;b=b+300){
   
    var offset=b;
-   console.log(offset);
    var asset_array=[];
 
    var fetch_Collections=await fetch('https://api.opensea.io/api/v1/collections?offset='+`${offset}`+ '&limit=300', options_Event)
@@ -46,24 +45,26 @@ router.route('/').get((req, res) => {
 
     try{
 
-      if(response.collections){
+      
 
       for(var v=0;v<response.collections.length;v++){
 
-      var singleCollection= {
-        Name:response.collections[v].name?response.collections[v].name:'Empty',
-        Date:response.collections[v].created_date?response.collections[v].created_date.slice(0,-16):'Empty',
-        Floor_price:response.collections[v].stats.floor_price?response.collections[v].floor_price/1000000000000000000:'Empty',
-        Stats:response.collections[v].stats?response.collections[v].stats:'Empty',
-        Description:response.collections[v].description?response.collections[v].description:'Empty',
+        if(response.collections){
+        var singleCollection= {
+          Name:response.collections[v].name?response.collections[v].name:'Empty',
+          Date:response.collections[v].created_date?response.collections[v].created_date.slice(0,-16):'Empty',
+          Floor_price:response.collections[v].stats.floor_price?response.collections[v].floor_price/1000000000000000000:'Empty',
+          Stats:response.collections[v].stats?response.collections[v].stats:'Empty',
+          Description:response.collections[v].description?response.collections[v].description:'Empty',
       }
+
        asset_array.push(singleCollection);
       
       }
-
-      return asset_array;
+   
     }
 
+      return asset_array;
     }
     catch(error){
 
