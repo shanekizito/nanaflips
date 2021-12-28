@@ -36,7 +36,7 @@ router.route('/').get((req, res) => {
   
    var offset=o;
    var asset_array=[];
-   let all_Collections=[];
+   var all_Collections=[];
 
    var fetch_Collections=await fetch('https://api.opensea.io/api/v1/collections?offset='+`${offset}`+ '&limit=300', options_Event)
   .then(response => response.json())
@@ -72,7 +72,7 @@ router.route('/').get((req, res) => {
    })
   .catch(err => console.error(err));
   
- all_Collections=[...all_Collections,...fetch_Collections];
+  all_Collections=[...all_Collections,...fetch_Collections];
 
 }
 
@@ -94,7 +94,7 @@ function compare(a, b) {
 }
 
 
-var sortedCollection = all_Collections.sort(compare);
+var sortedCollection =all_Collections.sort(compare);
   
     db_connect.collection("Collections").insertOne(sortedCollection, function (err, result) {
         if (err) throw err;
@@ -103,6 +103,8 @@ var sortedCollection = all_Collections.sort(compare);
       });
 
     });
+
+
 
   router.route("/stats/get/:id").get(function (req, res) {
     let db_connect =dbo.client.db("NFTstats");
