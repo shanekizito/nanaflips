@@ -37,7 +37,7 @@ router.route('/').get((req, res) => {
     for (var b=0; b<10000;b=b+300){
   
    var offset=b;
-   console.log("offset: "+offset);
+   console.log("offset:"+offset);
    var asset_array=[];
 
    var fetch_Collections=await fetch('https://api.opensea.io/api/v1/collections?offset='+`${offset}`+ '&limit=300', options_Event)
@@ -67,6 +67,10 @@ router.route('/').get((req, res) => {
     }
 
       return asset_array;
+    }
+    else{
+      console.log("empty................................................................",response);
+    }
     }
     }
     catch(error){
