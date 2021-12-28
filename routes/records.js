@@ -37,6 +37,7 @@ router.route('/').get((req, res) => {
     for (var b=0; b<10000;b=b+300){
   
    var offset=b;
+   console.log("offset: "+offset);
    var asset_array=[];
 
    var fetch_Collections=await fetch('https://api.opensea.io/api/v1/collections?offset='+`${offset}`+ '&limit=300', options_Event)
@@ -45,11 +46,12 @@ router.route('/').get((req, res) => {
 
     try{
 
-      if(response.collection){
+      if(response.collections){
 
       for(var v=0;v<response.collections.length;v++){
 
         if(response.collections[v].stats.floor_price!=null){
+
         var singleCollection= {
           Name:response.collections[v].name?response.collections[v].name:'Empty',
           Date:response.collections[v].created_date?response.collections[v].created_date.slice(0,-16):'Empty',
@@ -69,7 +71,7 @@ router.route('/').get((req, res) => {
     }
     catch(error){
 
-      console.log(error,"errror asset events");
+      console.log(error,"errror collections................");
     
       return['error'];
     }
