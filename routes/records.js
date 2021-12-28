@@ -33,10 +33,10 @@ router.route('/').get((req, res) => {
     let db_connect =dbo.client.db("NFTstats");
     var all_Collections=[];
 
-    
+
     for (var b=0; b<601;b=b+300){
   
-   var offset=o;
+   var offset=b;
    console.log(offset);
    var asset_array=[];
 
