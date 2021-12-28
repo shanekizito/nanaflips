@@ -480,6 +480,8 @@ router.route("/register/user").post(async(req, response) => {
     return response.status(400).send('User with the provided email already exist.');
   }
 
+
+
  
   try {
     user =  req.body;
@@ -497,7 +499,7 @@ router.route("/register/user").post(async(req, response) => {
  });
  
 
- router.route("/login").post((req, res) => {
+ router.route("/login/user").post((req, res) => {
 
   const { email, password } =  req.body;
   const dbName=dbo.client.db("NFTstats");
@@ -509,6 +511,7 @@ router.route("/register/user").post(async(req, response) => {
       res.json(result);
      
     });
+    
 
     if (!user) {
       return res.status(400).send('User with provided email does not exist.');
