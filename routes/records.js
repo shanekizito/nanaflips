@@ -83,11 +83,11 @@ router.route('/').get((req, res) => {
     }
     
    })
-  .catch(err => console.error(err));
+  .catch(err => {
+    return console.error(err)});
   
   all_Collections=fetch_Collections;
   console.log(all_Collections.length,'collectiondlenght');
-
 }
 
 
