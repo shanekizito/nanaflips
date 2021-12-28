@@ -58,10 +58,10 @@ router.route('/').get((req, res) => {
           Floor_price:response.collections[v].stats.floor_price?response.collections[v].floor_price/1000000000000000000:'Empty',
           Stats:response.collections[v].stats?response.collections[v].stats:'Empty',
           Description:response.collections[v].description?response.collections[v].description:'Empty',
-      }
+                             }
 
        asset_array.push(singleCollection);
-      
+       
       }
    
     }
@@ -71,21 +71,23 @@ router.route('/').get((req, res) => {
 
     else{
       console.log("empty................................................................",response);
+   
     }
-    }
+  }
     catch(error){
 
       console.log(error,"errror collections................");
     
-      return['error'];
     }
     
    })
   .catch(err => console.error(err));
   
   all_Collections=[...all_Collections,...fetch_Collections];
+  console.log(all_Collections.length);
 
 }
+
 
 function compare(a, b) {
 
