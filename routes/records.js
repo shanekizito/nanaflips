@@ -32,13 +32,14 @@ router.route('/').get((req, res) => {
 
     let db_connect =dbo.client.db("NFTstats");
     var all_Collections=[];
+    var asset_array=[];
 
 
     for (var b=0; b<10000;b=b+300){
   
    var offset=b;
    console.log("offset:"+offset);
-   var asset_array=[];
+ 
 
    var fetch_Collections=await fetch('https://api.opensea.io/api/v1/collections?offset='+`${offset}`+ '&limit=300', options_Event)
   .then(response => response.json())
@@ -66,13 +67,14 @@ router.route('/').get((req, res) => {
    
     }
 
-      return asset_array;
+     
     }
 
     else{
       console.log("empty................................................................",response);
-   
+      return null;
     }
+  
   }
     catch(error){
 
@@ -83,10 +85,11 @@ router.route('/').get((req, res) => {
    })
   .catch(err => console.error(err));
   
-  all_Collections=[...all_Collections,...fetch_Collections];
   console.log(all_Collections.length);
 
 }
+
+all_Collections=asset_array;
 
 
 function compare(a, b) {
