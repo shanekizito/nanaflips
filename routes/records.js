@@ -499,19 +499,17 @@ router.route("/register/user").post(async(req, response) => {
  });
  
 
- router.route("/login/user").post((req, res) => {
+ router.route("/login/user").post(async(req, res) => {
 
-  const { email, password } =  req.body;
+  const email =  {email:req.body.email};
+
   const dbName=dbo.client.db("NFTstats");
 
   try {
 
-    const user =  dbName.collection("user_register").findOne(email, function (err, result) {
-      if (err) throw err;
-      res.json(result);
-     
-    });
-    
+    const user = await dbName.collection("user_register").findOne(email);
+    console.log(user);
+
 
     if (!user) {
       return res.status(400).send('User with provided email does not exist.');
@@ -528,7 +526,9 @@ router.route("/register/user").post(async(req, response) => {
     const { password, ...rest } = user.toObject();
 
     return res.send(rest);
+    
   } catch (error) {
+    console.log(error); 
     return res.status(500).send('Something went wrong. Try again later.');
   }
 });
