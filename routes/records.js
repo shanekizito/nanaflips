@@ -64,16 +64,20 @@ router.route('/').get((req, res) => {
        asset_array.push(singleCollection);
        
       }
+
    
     }
     all_Collections=[...all_Collections,...asset_array];
      
     }
     
+    else if(response=={ detail: 'Request was throttled.' }){
+     setTimeout(() => {
+      console.log("waiting");
+      fetch_Collections();
+     }, 2000);
+    
 
-    else{
-      console.log("empty................................................................",response);
-      return null;
     }
     
   }
