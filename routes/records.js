@@ -51,7 +51,7 @@ router.route('/').get((req, res) => {
 
       for(var v=0;v<response.collections.length;v++){
 
-        if(response.collections[v].stats.floor_price!=null){
+        if(response.collections[v].stats.floor_price>0){
 
         var singleCollection= {
           Name:response.collections[v].name?response.collections[v].name:'Empty',
