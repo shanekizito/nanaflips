@@ -40,7 +40,7 @@ router.route('/').get((req, res) => {
    var offset=b;
    console.log("offset:"+offset);
  
- async function fetchCollections(){
+
    var fetch_Collections=await fetch('https://api.opensea.io/api/v1/collections?offset='+`${offset}`+ '&limit=300', options_Event)
   .then(response => response.json())
   .then(response => {
@@ -51,8 +51,8 @@ router.route('/').get((req, res) => {
 
       for(var v=0;v<response.collections.length;v++){
 
-        if(response.collections[v].stats.floor_price!==0){
-        console.log(response.collections[v].stats.floor_price);
+        if(response.collections[v].stats.floor_price!=null){
+
         var singleCollection= {
           Name:response.collections[v].name?response.collections[v].name:'Empty',
           Date:response.collections[v].created_date?response.collections[v].created_date.slice(0,-16):'Empty',
@@ -62,17 +62,17 @@ router.route('/').get((req, res) => {
                              }
 
        asset_array.push(singleCollection);
-
+       
       }
    
     }
 
-
+      return asset_array;
     }
 
     else{
       console.log("empty................................................................",response);
-     
+      return null;
     }
   
   }
@@ -84,15 +84,11 @@ router.route('/').get((req, res) => {
     
    })
   .catch(err => console.error(err));
-}
-
-setTimeout(fetchCollections, 2000);
   
-  console.log(all_Collections.length);
+  all_Collections=fetch_Collections;
+  console.log(all_Collections.length,'collectiondlenght');
 
 }
-
-all_Collections=asset_array;
 
 
 function compare(a, b) {
