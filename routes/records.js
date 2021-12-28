@@ -45,11 +45,11 @@ router.route('/').get((req, res) => {
 
     try{
 
-      
+      if(response.collection){
 
       for(var v=0;v<response.collections.length;v++){
 
-        if(response.collections){
+        if(response.collections[v].stats.floor_price!=null){
         var singleCollection= {
           Name:response.collections[v].name?response.collections[v].name:'Empty',
           Date:response.collections[v].created_date?response.collections[v].created_date.slice(0,-16):'Empty',
@@ -65,6 +65,7 @@ router.route('/').get((req, res) => {
     }
 
       return asset_array;
+    }
     }
     catch(error){
 
