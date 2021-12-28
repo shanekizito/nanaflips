@@ -28,7 +28,7 @@ router.route('/').get((req, res) => {
 
 
 
-  router.route("/collections/get").get(function (req, res) {
+  router.route("/collections/get").get(function async(req, res) {
 
     let db_connect =dbo.client.db("NFTstats");
 
