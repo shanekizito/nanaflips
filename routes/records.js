@@ -68,9 +68,9 @@ router.route('/').get((req, res) => {
 
       return asset_array;
     }
+
     else{
       console.log("empty................................................................",response);
-    }
     }
     }
     catch(error){
