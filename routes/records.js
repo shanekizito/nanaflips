@@ -40,7 +40,7 @@ router.route('/').get((req, res) => {
    var offset=b;
    console.log("offset:"+offset);
  
-function fetchCollections(){
+async function fetchCollections(){
    var fetch_Collections=await fetch('https://api.opensea.io/api/v1/collections?offset='+`${offset}`+ '&limit=300', options_Event)
   .then(response => response.json())
   .then(response => {
@@ -90,7 +90,7 @@ setTimeout(fetchCollections, 2000);
   
   console.log(all_Collections.length);
 
-}
+}async
 
 all_Collections=asset_array;
 
