@@ -51,7 +51,7 @@ router.route('/').get((req, res) => {
 
       for(var v=0;v<response.collections.length;v++){
 
-        if(response.collections[v].stats.floor_price&&response.collections[v].stats.floor_price>0){
+        if(response.collections[v].stats.total_volume&&response.collections[v].stats.total_volume>0){
           console.log("collection:"+response.collections[v].name);
 
         var singleCollection= {
@@ -60,6 +60,7 @@ router.route('/').get((req, res) => {
           Floor_price:response.collections[v].stats.floor_price?response.collections[v].floor_price/1000000000000000000:'Empty',
           Stats:response.collections[v].stats?response.collections[v].stats:'Empty',
           Description:response.collections[v].description?response.collections[v].description:'Empty',
+          TotalVolume:response.collections[v].stats.total_volume?response.collections[v].stats.total_volume:'Empty',
                              }
 
        asset_array.push(singleCollection);
@@ -104,8 +105,8 @@ router.route('/').get((req, res) => {
 
 function compare(a, b) {
 
-  const A = a.Floor_price;
-  const B = b.Floor_price;
+  const A = a.TotalVolume;
+  const B = b.TotalVolume;
 
   let comparison = 0;
 
