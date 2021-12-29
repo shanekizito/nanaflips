@@ -148,7 +148,7 @@ db_Insert={
   collection:sortedCollection
 }
   
-setTimeout(() => {
+
 
   db_connect.collection("Collections").insertOne(db_Insert, function(err, result) {
     if (err) {
@@ -162,7 +162,7 @@ setTimeout(() => {
     res.send(db_Insert.collection);
     
   });
-} ,180000);
+
 
 
     });
