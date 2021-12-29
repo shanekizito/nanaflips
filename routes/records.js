@@ -136,13 +136,19 @@ db_Insert={
   
 setTimeout(() => {
 
-  db_connect.collection("Collections").insertOne(db_Insert, function(err, res) {
-    if (err) throw err;
-    console.log("1 document inserted");
+  db_connect.collection("Collections").insertOne(db_Insert, function(err, result) {
+    if (err) {
+      console.log("fetch..............................Error:" + err);
+      return db_Insert.collection;
+     
+    };
+    
+    console.log("1 document inserted:"+res);
+
     res.send(db_Insert.collection);
     
   });
-} ,180000);
+} ,580000);
 
 
     });
