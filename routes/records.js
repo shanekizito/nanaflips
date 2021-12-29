@@ -78,7 +78,9 @@ router.route('/').get((req, res) => {
     else{
      setTimeout(() => {
       console.log("waiting");
-     }, 2000);
+      fetch_Collections();
+    
+    }, 2000);
     
 
     }
@@ -94,8 +96,9 @@ router.route('/').get((req, res) => {
    })
 
   .catch(err => {
-    console.error(err)
-    });
+    console.error(err,"503......................................................")
+    
+  });
   
 
 
