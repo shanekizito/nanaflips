@@ -52,6 +52,7 @@ router.route('/').get((req, res) => {
       for(var v=0;v<response.collections.length;v++){
 
         if(response.collections[v].stats.floor_price&&response.collections[v].stats.floor_price>0){
+          console.log("collection:"+response.collections[v].name);
 
         var singleCollection= {
           Name:response.collections[v].name?response.collections[v].name:'Empty',
@@ -68,18 +69,21 @@ router.route('/').get((req, res) => {
    
     }
     all_Collections=[...all_Collections,...asset_array];
-     
-    }
+      
+    console.log(all_Collections.length,'collectiondlenght');
+    return all_Collections
+  }
     
     else{
      setTimeout(() => {
       console.log("waiting");
-      fetch_Collections();
+      all_Collections=fetch_Collections;
      }, 2000);
     
 
     }
     
+    ;
   }
     catch(error){
 
@@ -93,8 +97,7 @@ router.route('/').get((req, res) => {
     console.error(err)
     return null });
   
-  
-  console.log(all_Collections.length,'collectiondlenght');
+
 
 }
 
