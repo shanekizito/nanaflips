@@ -71,7 +71,7 @@ router.route('/').get((req, res) => {
      
     }
     
-    else if(response=={ detail: 'Request was throttled.' }){
+    else{
      setTimeout(() => {
       console.log("waiting");
       fetch_Collections();
