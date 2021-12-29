@@ -35,7 +35,7 @@ router.route('/').get((req, res) => {
     var asset_array=[];
 
 
-    for (var b=0; b<147483647;b=b+300){
+    for (var b=0; b<1000000;b=b+300){
   
    var offset=b;
    console.log("offset:"+offset);
@@ -78,7 +78,6 @@ router.route('/').get((req, res) => {
     else{
      setTimeout(() => {
       console.log("waiting");
-      all_Collections=fetch_Collections;
      }, 2000);
     
 
@@ -96,7 +95,7 @@ router.route('/').get((req, res) => {
 
   .catch(err => {
     console.error(err)
-    return null });
+    });
   
 
 
