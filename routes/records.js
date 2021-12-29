@@ -78,8 +78,8 @@ router.route('/').get((req, res) => {
     else{
      setTimeout(() => {
       console.log("waiting");
-      fetch_Collections();
-    
+      return fetch_Collections;
+  
     }, 2000);
     
 
