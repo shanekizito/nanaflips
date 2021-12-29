@@ -24,11 +24,25 @@ router.route('/').get((req, res) => {
 });
 
 
+router.route("/collections/get").get( async(req, res)=> {
+
+  let db_connect =dbo.client.db("NFTstats");
+
+  let query ={_id:ObjectId(req.params.id)};
+
+  console.log(myquery);
+
+  db_connect.collection("Collections").findOne(myquery, function (err, result) {
+      if (err) throw err;
+      res.json(result);
+
+    });
+
+});
 
 
 
-
-  router.route("/collections/get").get( async(req, res)=> {
+  router.route("/collections/get").post( async(req, res)=> {
 
     let db_connect =dbo.client.db("NFTstats");
     var all_Collections=[];
@@ -140,15 +154,15 @@ setTimeout(() => {
     if (err) {
       console.log("fetch..............................Error:" + err);
       return db_Insert.collection;
-     
+    
     };
     
-    console.log("1 document inserted:"+res);
+    console.log("1 document inserted:"+result);
 
     res.send(db_Insert.collection);
     
   });
-} ,580000);
+} ,180000);
 
 
     });
