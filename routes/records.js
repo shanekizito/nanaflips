@@ -145,9 +145,12 @@ setTimeout(() => {
 } ,180000);
 
 
+    });
+
     
 
-  
+
+
   router.route("/stats/get/:id").get(function (req, res) {
     let db_connect =dbo.client.db("NFTstats");
 
