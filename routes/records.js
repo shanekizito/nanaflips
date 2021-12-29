@@ -76,10 +76,15 @@ router.route('/').get((req, res) => {
   }
     
     else{
+
+      if(offset>=999900){
+        console.log('done');
+        return all_Collections
+       }
+       
      setTimeout(() => {
       console.log("waiting");
       return fetch_Collections;
-  
     }, 2000);
     
 
@@ -129,17 +134,20 @@ db_Insert={
   collection:sortedCollection
 }
   
-    db_connect.collection("Collections").insertOne(db_Insert, function (err, result) {
-        if (err) throw err;
-        res.send(db_Insert.collection);
-      });
+setTimeout(() => {
 
-    });
+  db_connect.collection("Collections").insertOne(db_Insert, function(err, res) {
+    if (err) throw err;
+    console.log("1 document inserted");
+    res.send(db_Insert.collection);
+    
+  });
+} ,180000);
+
 
     
 
-
-
+  
   router.route("/stats/get/:id").get(function (req, res) {
     let db_connect =dbo.client.db("NFTstats");
 
