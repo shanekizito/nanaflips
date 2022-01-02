@@ -28,18 +28,15 @@ router.route("/collections/get").get( async(req, res)=> {
 
   let db_connect =dbo.client.db("NFTstats");
 
-  let query ={_id:ObjectId(req.params.id)};
-
-  console.log(myquery);
-
-  db_connect.collection("Collections").findOne(myquery, function (err, result) {
+  db_connect.collection("Collections").findOne(
+    {},
+    { sort: { _id: -1 } },
+    (err, data) => {
       if (err) throw err;
-      res.json(result);
-
-    });
-
+      res.json(data);
+    },
+  );
 });
-
 
 
   router.route("/stats/get/:id").get(function (req, res) {
