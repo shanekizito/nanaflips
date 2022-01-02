@@ -82,7 +82,7 @@ const options_Event = {
         
         else{
       
-          if(offset>=1000000){
+          if(offset>=2147483648){
             console.log('done');          
            }
            
