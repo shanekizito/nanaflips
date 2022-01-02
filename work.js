@@ -133,8 +133,7 @@ const options_Event = {
           console.log("fetch..............................Error:" + err);
            
         };
-         ``
-        res.send(sortedCollection);
+        
       });
   
       });
