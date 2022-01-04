@@ -424,7 +424,6 @@ var hold_QueryId= hold_NFT.slice(0,30);
 };
 
 
-
 getAllData(ID).then(response => {
 
 var person=response;
@@ -442,6 +441,7 @@ return person;
 
 
 });
+
 
 router.route("/register/user").post(async(req, response) => {
  
