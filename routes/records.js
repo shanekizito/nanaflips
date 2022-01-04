@@ -42,130 +42,7 @@ router.route("/collections/get").get( async(req, res)=> {
 
 
 
-  router.route("/collections/get").post( async(req, res)=> {
-
-    let db_connect =dbo.client.db("NFTstats");
-    var all_Collections=[];
-    var asset_array=[];
-
-
-    for (var b=0; b<1000000;b=b+300){
-  
-   var offset=b;
-   console.log("offset:"+offset);
  
-
-   var fetch_Collections=await fetch('https://api.opensea.io/api/v1/collections?offset='+`${offset}`+ '&limit=300', options_Event)
-  .then(response => response.json())
-  .then(response => {
-
-    try{
-
-      if(response.collections){
-
-      for(var v=0;v<response.collections.length;v++){
-
-        if(response.collections[v].stats.total_volume&&response.collections[v].stats.total_volume>0){
-          console.log("collection:"+response.collections[v].name);
-
-        var singleCollection= {
-          Name:response.collections[v].name?response.collections[v].name:'Empty',
-          Date:response.collections[v].created_date?response.collections[v].created_date.slice(0,-16):'Empty',
-          Floor_price:response.collections[v].stats.floor_price?response.collections[v].floor_price/1000000000000000000:'Empty',
-          Stats:response.collections[v].stats?response.collections[v].stats:'Empty',
-          Description:response.collections[v].description?response.collections[v].description:'Empty',
-          TotalVolume:response.collections[v].stats.total_volume?response.collections[v].stats.total_volume:'Empty',
-                             }
-
-       asset_array.push(singleCollection);
-       
-      }
-
-   
-    }
-    all_Collections=[...all_Collections,...asset_array];
-      
-    console.log(all_Collections.length,'collectiondlenght');
-    return all_Collections
-  }
-    
-    else{
-
-      if(offset>=999900){
-        console.log('done');
-        return all_Collections
-       }
-       
-     setTimeout(() => {
-      console.log("waiting");
-      return fetch_Collections;
-    }, 2000);
-    
-
-    }
-    
-    ;
-  }
-    catch(error){
-
-      console.log(error,"errror collections................");
-    
-    }
-    
-   })
-
-  .catch(err => {
-    console.error(err,"503......................................................")
-    
-  });
-  
-
-
-}
-
-
-function compare(a, b) {
-
-  const A = a.TotalVolume;
-  const B = b.TotalVolume;
-
-  let comparison = 0;
-
-  if (A >B) {
-    comparison = 1;
-  } else if (A <B) {
-    comparison = -1;
-  }
-
-  return comparison * -1;
-
-}
-
-
-var sortedCollection =all_Collections.sort(compare);
-
-db_Insert={
-  collection:sortedCollection
-}
-  
-
-
-  db_connect.collection("Collections").insertOne(db_Insert, function(err, result) {
-    if (err) {
-      console.log("fetch..............................Error:" + err);
-      return db_Insert.collection;
-    
-    };
-    
-    console.log("1 document inserted:"+result);
-
-    res.send(db_Insert.collection);
-    
-  });
-
-
-
-    });
 
     
 
@@ -261,7 +138,6 @@ db_Insert={
     }).catch(err => console.error(err));
 
     
-   
   }
   
   NFT_Sale=[...NFT_Sale,...fetchNFT_Sale];
@@ -506,7 +382,7 @@ var hold_QueryId= hold_NFT.slice(0,30);
   
  const expensive_asset=sortedAsset[0];
  
- console.log("expensive_asset",expensive_asset);
+
  
     
     if(maxHoldArray.length>2){
@@ -558,14 +434,13 @@ var hold_QueryId= hold_NFT.slice(0,30);
 
 
 getAllData(ID).then(response => {
-
 var person=response;
-console.log(person,"person");
 return person;
 
 }).then( person=>  {
   dbName.collection("Tracked_Wallets").insertOne(person, function (err, res) {
-      if (err) throw err;
+
+      if (err) throw err+"error----------------------------------------";
       response.json(res); 
     });
 
@@ -573,6 +448,7 @@ return person;
 
 
 });
+
 
 router.route("/register/user").post(async(req, response) => {
  
