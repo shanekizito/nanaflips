@@ -113,7 +113,12 @@ router.route("/collections/get").get( async(req, res)=> {
 
               else{
                 console.log("No Data",response)
-                return [];
+
+                setTimeout(() => {
+
+                  getAllData(ID);
+                } , 3000);
+               
               }
               
           
