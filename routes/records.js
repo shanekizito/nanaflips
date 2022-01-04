@@ -77,6 +77,7 @@ router.route("/collections/get").get( async(req, res)=> {
         let Sales=[];
         let Buys=[];
         let EthereumBalance;
+        fetchNFT_Sale=[0];
     
         for (var o=0; o<601;o=o+300){
     
@@ -84,13 +85,14 @@ router.route("/collections/get").get( async(req, res)=> {
           console.log(offset);
         
           var asset_array=[];
-          var fetchNFT_Sale= await fetch('https://api.opensea.io/api/v1/events?account_address='+`${ID}`+'&event_type=successful&only_opensea=false&offset='+`${offset}`+ '&limit=300', options_Event)
+           fetchNFT_Sale= await fetch('https://api.opensea.io/api/v1/events?account_address='+`${ID}`+'&event_type=successful&only_opensea=false&offset='+`${offset}`+ '&limit=300', options_Event)
           .then(response => response.json())
           .then(response => {
             
             try{
     
               if(response.asset_events){
+                console.log(response.asset_events.length,"Eurekea")
     
               for(var v=0;v<response.asset_events.length;v++){
     
@@ -107,6 +109,11 @@ router.route("/collections/get").get( async(req, res)=> {
              }
     
               return asset_array;
+              }
+
+              else{
+                console.log("No Data",response)
+                return [];
               }
               
           
