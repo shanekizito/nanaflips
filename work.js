@@ -14,10 +14,13 @@ app.use(express.json());
 const dbo = require("./db/conn");
 app.use(express.json());
 const Agenda = require('agenda');
-var all_Collections=[];
+
 var asset_array=[];
+var all_Collections=asset_array;
+
 let db_connect =dbo.client.db("NFTstats");
-var global_offset=0;
+
+
 const options_Event = {
     method: 'GET',
     headers: {Accept: 'application/json', 'X-API-KEY': '2d3ddf54946e4569b7cd1df8daca6e4a'}
@@ -32,26 +35,20 @@ const options_Event = {
     
       const agenda = new Agenda({
         db: {address: dbURL, collection: 'Agenda'},
-        processEvery: '2 seconds',
+        processEvery: '5 seconds',
         useUnifiedTopology: true
     });
       
-    
+
       // Define a "job", an arbitrary function that agenda can execute
-      agenda.define('hello', async() => {
+      agenda.define('getCollect', async() => {
   
-       
-        for (var b=0; b<2147483648;b=b+300){
-      
-        var offset=b;
-        
+       for (var b=0; b<30000000;b=b+300){
+       var offset=b;
        console.log("offset:"+offset);
-      
-      
        var fetch_Collections=await fetch('https://api.opensea.io/api/v1/collections?offset='+`${offset}`+ '&limit=300', options_Event)
       .then(response => response.json())
       .then(response => {
-      
         try{
       
           if(response.collections){
@@ -61,39 +58,39 @@ const options_Event = {
             if(response.collections[v].stats.total_volume&&response.collections[v].stats.total_volume>0){
               console.log("collection:"+response.collections[v].name);
       
-            var singleCollection= {
+             var singleCollection= {
               Name:response.collections[v].name?response.collections[v].name:'Empty',
+              Image:response.collections[v].stats.image_url?response.collections[v].image_url:'Empty',
               Date:response.collections[v].created_date?response.collections[v].created_date.slice(0,-16):'Empty',
               Floor_price:response.collections[v].stats.floor_price?response.collections[v].floor_price/1000000000000000000:'Empty',
               Stats:response.collections[v].stats?response.collections[v].stats:'Empty',
               Description:response.collections[v].description?response.collections[v].description:'Empty',
-              TotalVolume:response.collections[v].stats.total_volume?response.collections[v].stats.total_volume:'Empty',
-                                 }
-      
+              TotalVolume:response.collections[v].stats.total_volume?response.collections[v].stats.total_volume:'Empty',       
+            }
+
            asset_array.push(singleCollection);
-           
+
           }
       
-       
         }
-        all_Collections=[...all_Collections,...asset_array]; 
-        console.log(all_Collections.length,'collectiondlenght');
+
+     
+        console.log(all_Collections.length,'collection length');
       }
         
         else{
       
-          if(offset>=2147483648){
+          if(offset>=30000000){
             console.log('done');          
            }
            
          setTimeout(() => {
           console.log("waiting");
-          return fetch_Collections;
+        
         }, 2000);
         
       
         }
-        
         
       }
         catch(error){
@@ -103,11 +100,10 @@ const options_Event = {
         }
         
        }).catch(err => {
-        console.error(err,"503......................................................")
-        
+        console.error(err,"503................................................................")
       });
     }
-       console.log(all_Collections.length,'OVER 2700!===================================================!');
+       console.log(all_Collections.length,'OVER 10MILLI!=======================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================!');
        function compare(a, b) {
       
         const A = a.TotalVolume;
@@ -124,18 +120,21 @@ const options_Event = {
         return comparison * -1;
         
         }
+        
         var sortedCollection =all_Collections.sort(compare);
   
-        var insert_collection={collections:sortedCollection};
+        var newCollection=sortedCollection.slice(0,200)
+        var insert_collection={collections:newCollection};
+
         db_connect.collection("Collections").insertOne(insert_collection, function(err, result) {
-       
           if (err) {
           console.log("fetch..............................Error:" + err);
-           
+          console.log(result,"result------------------------------");
         };
-        
+
+
       });
-  
+
       });
     
   
@@ -146,9 +145,8 @@ const options_Event = {
     
       // Schedule a job for 1 second from now and persist it to mongodb.
       // Jobs are uniquely defined by their name, in this case "hello"
-      agenda.schedule(new Date(Date.now() + 1000), 'hello');
-     return agenda.start().then(()=> all_Collections);
-
+      agenda.schedule(new Date(Date.now() + 5000), 'getCollect');
+      agenda.start();
     }
     
      run().catch(error => {
