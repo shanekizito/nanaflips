@@ -41,7 +41,7 @@ const options_Event = {
       
 
       // Define a "job", an arbitrary function that agenda can execute
-      agenda.define('getCollect', async() => {
+      agenda.define('gettCollect', async() => {
   
        for (var b=0; b<30000000;b=b+300){
        var offset=b;
@@ -145,7 +145,7 @@ const options_Event = {
     
       // Schedule a job for 1 second from now and persist it to mongodb.
       // Jobs are uniquely defined by their name, in this case "hello"
-      agenda.schedule(new Date(Date.now() + 5000), 'getCollect');
+      agenda.schedule(new Date(Date.now() + 5000), 'gettCollect');
       agenda.start();
     }
     
